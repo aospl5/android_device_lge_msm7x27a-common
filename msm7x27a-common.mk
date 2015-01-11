@@ -72,24 +72,23 @@ PRODUCT_COPY_FILES += \
 
 # display HALS
 PRODUCT_PACKAGES += \
-    libgenlock \
-    gralloc.msm7x27a \
     copybit.msm7x27a \
-    libqdMetaData \
+    gralloc.msm7x27a \
+    hwcomposer.msm7x27a \
     memtrack.msm7x27a \
-    hwcomposer.msm7x27a
+    libgenlock \
+    liboverlay \
+    libtilerenderer \
+    libqdMetaData
 
 # off-mode charging
 PRODUCT_PACKAGES += \
     charger \
     charger_res_images
 
-# Omx
+# Other
 PRODUCT_PACKAGES += \
-    libmm-omxcore \
-    libOmxCore \
-    libstagefrighthw \
-    libdashplayer
+    dexpreopt 
 
 # Gps hal
 PRODUCT_PACKAGES += \
@@ -99,9 +98,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.msm7x27a
 
-# Camera Hal
-PRODUCT_PACKAGES += \
-    camera.msm7x27a
+# Camera
+#PRODUCT_PACKAGES += \
+    camera.msm7x27a \
+    libsurfaceflinger_client
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -114,7 +114,7 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 # audio 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libaudioutils \
     audio.a2dp.default \
     audio.usb.default \
@@ -122,13 +122,23 @@ PRODUCT_PACKAGES += \
     audio_policy.msm7x27a \
     libaudio-resampler
 
+# Video decoding
+PRODUCT_PACKAGES += \
+    libstagefrighthw \
+    libOmxCore \
+    libdashplayer \
+    qcmediaplayer
+
+PRODUCT_BOOT_JARS += \
+    qcmediaplayer
+
 # light hal
 PRODUCT_PACKAGES += \
     lights.msm7x27a
 
 # Radio properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=LGEQualcommUiccRIL \
+    ro.telephony.ril_class=LgeMsm7x27aRIL \
     ro.telephony.default_network=0 \
     ro.telephony.call_ring.multiple=0 \
     telephony.lteOnGsmDevice=0 \
@@ -171,8 +181,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/system/lib/libqc-opt.so
 
-# Enable Torch
-PRODUCT_PACKAGES += Torch
+# Disable atlas services on low-ram targets
+PRODUCT_PROPERTY_OVERRIDES += \
+    config.disable_atlas=true 
+
+# Newer camera API isn't supported.
+PRODUCT_PROPERTY_OVERRIDES += \
+    camera2.portability.force_api=1
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE

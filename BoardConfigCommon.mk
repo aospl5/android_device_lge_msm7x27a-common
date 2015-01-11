@@ -55,25 +55,37 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_VOLD_MAX_PARTITIONS := 23
 TARGET_USERIMAGES_USE_EXT4 := true
 
+# Don't generate block mode update zips
+BLOCK_BASED_OTA := false
+
 # cflags
-COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_ABI_HACK -DUSE_MDP3
 COMMON_GLOBAL_CFLAGS += -DLPA_DEFAULT_BUFFER_SIZE=480
-TARGET_GLOBAL_CFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp
+TARGET_GLOBAL_CFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
+TARGET_GLOBAL_CPPFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
+TARGET_RELEASE_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_OMX
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
+COMMON_GLOBAL_CFLAGS += -DNO_UPDATE_PREVIEW
+COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
+COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_LEGACY
+COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_CAM_PARAMS
+COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
 
 # QCOM  display stuffs
+TARGET_QCOM_DISPLAY_VARIANT := display-caf
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-TARGET_QCOM_DISPLAY_VARIANT := caf
 USE_OPENGL_RENDERER := true
-TARGET_USES_ION := true
 TARGET_USES_QCOM_BSP := true
+TARGET_NO_ADAPTIVE_PLAYBACK := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
-BOARD_EGL_WORKAROUND_BUG_10194508 := true
+HWUI_COMPILE_FOR_PERF := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 BOARD_EGL_CFG := device/lge/msm7x27a-common/egl.cfg
 
 # Media 
-TARGET_QCOM_MEDIA_VARIANT := caf
+TARGET_QCOM_MEDIA_VARIANT := media-caf
 
 # Add QC Video Enhancements flag
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
@@ -81,12 +93,44 @@ TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
 
+# Media
+TARGET_QCOM_LEGACY_OMX := true
+
+# ION Support
+TARGET_USES_ION := true
+
 # audio 
-TARGET_QCOM_AUDIO_VARIANT := caf
+TARGET_QCOM_AUDIO_VARIANT := audio-caf
 TARGET_PROVIDES_LIBAUDIO := true
 BOARD_QCOM_VOIP_ENABLED := true
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 TARGET_HAS_QACT := true
+
+# Add h/w acceleration in browser
+ENABLE_WEBGL := true
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+JS_ENGINE := v8
+HTTP := chrome
+
+# ART
+MALLOC_IMPL := dlmalloc
+
+# Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+ ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+  ifeq ($(WITH_DEXPREOPT),)
+   WITH_DEXPREOPT := true
+  endif
+ endif
+endif
+DONT_DEXPREOPT_PREBUILTS := true
+
+# RIL
+BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+
+# Use Cpu Upload path (webkit)
+TARGET_FORCE_CPU_UPLOAD := true
 
 BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm7x27a
@@ -101,16 +145,14 @@ TARGET_NO_INITLOGO := true
 
 TARGET_PROVIDES_LIBLIGHT := true
 
-BOARD_SEPOLICY_DIRS := \
-       device/lge/msm7x27a-common/sepolicy
+# LOGD
+TARGET_USES_LOGD := false
 
-BOARD_SEPOLICY_UNION := \
-       device.te \
-       app.te \
-       file_contexts \
-       untrusted_app.te \
-       vold.te \
-       zygote.te
+# Enable Minikin text layout engine (will be the default soon)
+USE_MINIKIN := true
+
+# SELinux
+include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_HAS_QCOM_WLAN              := true
 BOARD_HAS_QCOM_WLAN_SDK          := true
