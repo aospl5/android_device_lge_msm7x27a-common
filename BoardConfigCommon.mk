@@ -128,6 +128,8 @@ DONT_DEXPREOPT_PREBUILTS := true
 
 # RIL
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
+TARGET_NEEDS_NON_PIE_SUPPORT := true
+BOARD_USES_LEGACY_RIL := true
 
 # Use Cpu Upload path (webkit)
 TARGET_FORCE_CPU_UPLOAD := true
