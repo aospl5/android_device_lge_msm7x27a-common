@@ -27,7 +27,9 @@
 # inherit from the proprietary version
 -include vendor/lge/msm7x27a-common/BoardConfigVendor.mk
 
-TARGET_SPECIFIC_HEADER_PATH := device/lge/msm7x27a-common/include
+LOCAL_PATH := device/lge/msm7x27a-common
+
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 BOARD_VENDOR := lge
 TARGET_NO_BOOTLOADER := true
@@ -83,7 +85,7 @@ TARGET_NO_ADAPTIVE_PLAYBACK := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
 HWUI_COMPILE_FOR_PERF := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-BOARD_EGL_CFG := device/lge/msm7x27a-common/egl.cfg
+BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
 
 # Media 
 TARGET_QCOM_MEDIA_VARIANT := media-caf
