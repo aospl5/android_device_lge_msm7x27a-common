@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
- * Copyright (c) 2011-2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
+ * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +33,7 @@ class AudioPolicyManager: public AudioPolicyManagerBase
 
 public:
                 AudioPolicyManager(AudioPolicyClientInterface *clientInterface)
-                : AudioPolicyManagerBase(clientInterface) {mForceDeviceChange=false;}
+                : AudioPolicyManagerBase(clientInterface) {}
 
         virtual ~AudioPolicyManager() {}
 
@@ -46,14 +45,14 @@ public:
                                            audio_devices_t prevDevice,
                                            uint32_t delayMs);
 
-        void setStrategyMute(routing_strategy strategy,
-                             bool on,
-                             audio_io_handle_t output,
-                             int delayMs = 0,
-                             audio_devices_t device = (audio_devices_t)0);
-        void setStreamMute(int stream, bool on, audio_io_handle_t output,
-                           int delayMs = 0,
-                           audio_devices_t device = (audio_devices_t)0);
+	void setStrategyMute(routing_strategy strategy,
+						 bool on,
+						 audio_io_handle_t output,
+						 int delayMs = 0,
+						 audio_devices_t device = (audio_devices_t)0);
+	void setStreamMute(int stream, bool on, audio_io_handle_t output,
+						int delayMs = 0,
+						audio_devices_t device = (audio_devices_t)0);
 
         virtual AudioSystem::device_connection_state getDeviceConnectionState(audio_devices_t device,
                                                                               const char *device_address);
@@ -64,7 +63,8 @@ public:
                                             uint32_t format = AudioSystem::FORMAT_DEFAULT,
                                             uint32_t channels = 0,
                                             AudioSystem::output_flags flags =
-                                                    AudioSystem::OUTPUT_FLAG_INDIRECT, const audio_offload_info_t *offloadInfo = NULL);
+                                                    AudioSystem::OUTPUT_FLAG_INDIRECT,
+                                                    const audio_offload_info_t *offloadInfo = NULL);
         virtual status_t startOutput(audio_io_handle_t output,
                                      AudioSystem::stream_type stream,
                                      int session = 0);
@@ -74,8 +74,8 @@ public:
         virtual void releaseOutput(audio_io_handle_t output);
         virtual audio_io_handle_t getInput(int inputSource,
                                             uint32_t samplingRate,
-                                            uint32_t format,
-                                            uint32_t channels,
+                                            audio_format_t format,
+                                            audio_channel_mask_t channels,
                                             AudioSystem::audio_in_acoustics acoustics);
 
         // indicates to the audio policy manager that the input starts being used.
@@ -114,10 +114,6 @@ protected:
         // select input device corresponding to requested audio source
         virtual audio_devices_t getDeviceForInputSource(int inputSource);
 
-        // compute the actual volume for a given stream according to the requested index and a particular
-        // device
-        virtual float computeVolume(int stream, int index, audio_io_handle_t output, audio_devices_t device);
-
         // check that volume change is permitted, compute and send new volume to audio hardware
         status_t checkAndSetVolume(int stream, int index, audio_io_handle_t output, audio_devices_t device, int delayMs = 0, bool force = false);
 
@@ -139,6 +135,7 @@ protected:
 
         // returns true if give output is direct output
         bool isDirectOutput(audio_io_handle_t output);
+
         virtual AudioPolicyManagerBase::IOProfile* getProfileForDirectOutput(
                                                      audio_devices_t device,
                                                      uint32_t samplingRate,
@@ -170,9 +167,8 @@ protected:
         virtual bool a2dpUsedForSonification() const { return true; }
 
 private:
+
         void handleNotificationRoutingForStream(AudioSystem::stream_type stream);
         bool platform_is_Fusion3();
-        bool isTunnelOutputEnabled();
-        bool mForceDeviceChange;
 };
 };

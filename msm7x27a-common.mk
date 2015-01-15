@@ -18,6 +18,8 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/lge/msm7x27a-common/overlay
 
+PRODUCT_BOOT_JARS += qcmediaplayer
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.lge-shared.rc:root/init.lge-shared.rc \
     $(LOCAL_PATH)/init.lge.usb.rc:root/init.lge.usb.rc
@@ -99,9 +101,8 @@ PRODUCT_PACKAGES += \
     power.msm7x27a
 
 # Camera
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     camera.msm7x27a \
-    libsurfaceflinger_client
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -114,7 +115,7 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 # audio 
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     libaudioutils \
     audio.a2dp.default \
     audio.usb.default \
@@ -126,9 +127,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libstagefrighthw \
     libOmxCore \
-    libdashplayer \
-    qcmediaplayer
+    libdashplayer
 
+# qcmediaplayer
 PRODUCT_BOOT_JARS += \
     qcmediaplayer
 
@@ -189,6 +190,28 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     camera2.portability.force_api=1
 
+# Other stuff
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.setupwizard.enable_bypass=1 \
+    ro.telephony.call_ring.multiple=false \
+    ro.vold.umsdirtyratio=50 \
+    persist.sys.purgeable_assets=1 \
+    ro.telephony.call_ring.delay=3000 \
+    ro.config.low_ram=true \
+    ro.com.android.mobiledata=false \
+    ro.com.android.dataroaming=false
+
+# Dalvik Tweaks
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.jit.codecachesize=0 \
+    dalvik.vm.heapstartsize=5m \
+    dalvik.vm.heapgrowthlimit=48m \
+    dalvik.vm.heapsize=64m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=2m
+
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BRAND := lge
+PRODUCT_TAGS += dalvik.gc.type-precise 
