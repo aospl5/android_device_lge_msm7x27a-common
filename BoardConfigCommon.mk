@@ -96,6 +96,9 @@ TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
 
+# BIONIC: use legacy mmap
+BOARD_USES_LEGACY_MMAP := true
+
 # Media
 TARGET_QCOM_LEGACY_OMX := true
 
@@ -119,20 +122,10 @@ HTTP := chrome
 # ART
 MALLOC_IMPL := dlmalloc
 
-# Enable dex-preoptimization to speed up first boot sequence
-ifeq ($(HOST_OS),linux)
- ifeq ($(TARGET_BUILD_VARIANT),userdebug)
-  ifeq ($(WITH_DEXPREOPT),)
-   WITH_DEXPREOPT := true
-  endif
- endif
-endif
 DONT_DEXPREOPT_PREBUILTS := true
 
 # RIL
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
-TARGET_NEEDS_NON_PIE_SUPPORT := true
-BOARD_USES_LEGACY_RIL := true
 
 # Use Cpu Upload path (webkit)
 TARGET_FORCE_CPU_UPLOAD := true

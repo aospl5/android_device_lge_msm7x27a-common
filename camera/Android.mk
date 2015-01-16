@@ -48,6 +48,8 @@ LOCAL_C_INCLUDES += \
      hardware/qcom/media-caf/msm7x27a/mm-core/inc \
      frameworks/base/services/camera/libcameraservice \
      frameworks/native/include/media/hardware \
+     frameworks/base/services/camera/libcameraservice \
+
      $(LOCAL_PATH)/mm-camera-interface
 
 LOCAL_SHARED_LIBRARIES := \
@@ -60,7 +62,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbinder \
     libmmcamera_interface2
 
-LOCAL_CFLAGS += -include bionic/libc/kernel/common/linux/socket.h
+LOCAL_CFLAGS += -include bionic/libc/kernel/uapi/linux/socket.h
 
 ifeq ($(DLOPEN_LIBMMCAMERA),1)
     LOCAL_SHARED_LIBRARIES += libdl
@@ -69,8 +71,8 @@ else
     LOCAL_SHARED_LIBRARIES += liboemcamera
 endif
 
-LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
-LOCAL_MODULE := camera.msm7x27a
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 endif # BUILD_TINY_ANDROID
