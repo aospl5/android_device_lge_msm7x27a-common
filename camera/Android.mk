@@ -50,8 +50,6 @@ LOCAL_C_INCLUDES += \
    frameworks/native/include/media/hardware \
    $(LOCAL_PATH)/mm-camera-interface
 
-     $(LOCAL_PATH)/mm-camera-interface
-
 LOCAL_SHARED_LIBRARIES := \
     libcamera_client \
     libcutils \

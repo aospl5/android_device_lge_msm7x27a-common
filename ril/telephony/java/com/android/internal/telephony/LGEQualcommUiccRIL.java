@@ -22,10 +22,15 @@ import android.content.Context;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.SystemProperties;
+import android.telephony.SignalStrength;
 import android.text.TextUtils;
-import android.util.Log;
+import android.telephony.Rlog;
 
 import java.util.ArrayList;
+
+import com.android.internal.telephony.uicc.IccCardApplicationStatus;
+import com.android.internal.telephony.uicc.IccCardStatus;
+import com.android.internal.telephony.dataconnection.DataCallResponse;
 
 /**
  * Custom Qualcomm No SimReady RIL for LGE using the latest Uicc stack
@@ -84,7 +89,7 @@ public class LGEQualcommUiccRIL extends QualcommSharedRIL implements CommandsInt
     @Override
     protected Object
     responseSetupDataCall(Parcel p) {
-        DataCallState dataCall;
+        DataCallResponse dataCall;
 
         boolean oldRil = needsOldRilFeature("datacall");
 
@@ -98,15 +103,15 @@ public class LGEQualcommUiccRIL extends QualcommSharedRIL implements CommandsInt
     @Override
     protected Object
     responseIccCardStatus(Parcel p) {
-        IccCardApplication ca;
+        IccCardApplicationStatus ca;
 
         IccCardStatus status = new IccCardStatus();
         status.setCardState(p.readInt());
         status.setUniversalPinState(p.readInt());
-        status.setGsmUmtsSubscriptionAppIndex(p.readInt());
-        status.setCdmaSubscriptionAppIndex(p.readInt());
+        status.mGsmUmtsSubscriptionAppIndex = p.readInt();
+        status.mCdmaSubscriptionAppIndex = p.readInt();
 
-        status.setImsSubscriptionAppIndex(p.readInt());
+        status.mImsSubscriptionAppIndex = p.readInt();
 
         int numApplications = p.readInt();
 
@@ -114,10 +119,11 @@ public class LGEQualcommUiccRIL extends QualcommSharedRIL implements CommandsInt
         if (numApplications > IccCardStatus.CARD_MAX_APPS) {
             numApplications = IccCardStatus.CARD_MAX_APPS;
         }
-        status.setNumApplications(numApplications);
+        status.mApplications = new IccCardApplicationStatus[numApplications];
+
 
         for (int i = 0; i < numApplications; i++) {
-            ca = new IccCardApplication();
+            ca = new IccCardApplicationStatus();
             ca.app_type = ca.AppTypeFromRILInt(p.readInt());
             ca.app_state = ca.AppStateFromRILInt(p.readInt());
             ca.perso_substate = ca.PersoSubstateFromRILInt(p.readInt());
@@ -130,27 +136,27 @@ public class LGEQualcommUiccRIL extends QualcommSharedRIL implements CommandsInt
             p.readInt(); //remaining_count_puk1
             p.readInt(); //remaining_count_pin2
             p.readInt(); //remaining_count_puk2
-            status.addApplication(ca);
+            status.mApplications[i] = ca;
         }
         int appIndex = -1;
         if (mPhoneType == RILConstants.CDMA_PHONE) {
-            appIndex = status.getCdmaSubscriptionAppIndex();
-            Log.d(LOG_TAG, "This is a CDMA PHONE " + appIndex);
+            appIndex = status.mCdmaSubscriptionAppIndex;
+            Rlog.d(RILJ_LOG_TAG, "This is a CDMA PHONE " + appIndex);
         } else {
-            appIndex = status.getGsmUmtsSubscriptionAppIndex();
-            Log.d(LOG_TAG, "This is a GSM PHONE " + appIndex);
+            appIndex = status.mGsmUmtsSubscriptionAppIndex;
+            Rlog.d(RILJ_LOG_TAG, "This is a GSM PHONE " + appIndex);
         }
 
         if (numApplications > 0) {
-            IccCardApplication application = status.getApplication(appIndex);
+            IccCardApplicationStatus application = status.mApplications[appIndex];
             mAid = application.aid;
             mUSIM = application.app_type
-                      == IccCardApplication.AppType.APPTYPE_USIM;
+                      == IccCardApplicationStatus.AppType.APPTYPE_USIM;
             mSetPreferredNetworkType = mPreferredNetworkType;
 
             if (TextUtils.isEmpty(mAid))
                mAid = "";
-            Log.d(LOG_TAG, "mAid " + mAid);
+            Rlog.d(RILJ_LOG_TAG, "mAid " + mAid);
         }
 
         return status;
@@ -177,13 +183,9 @@ public class LGEQualcommUiccRIL extends QualcommSharedRIL implements CommandsInt
                 response[i] = -1;
                 noLte = true;
             }
-            if (i == 8 && !(noLte || oldRil)) {
-                response[i] *= -1;
-            }
         }
 
-        return response;
+        return new SignalStrength(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7],response[8], response[9], response[10], response[11], true);
     }
 
 }
-
