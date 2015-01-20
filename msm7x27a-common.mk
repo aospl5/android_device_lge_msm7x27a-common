@@ -67,6 +67,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
@@ -95,7 +96,7 @@ PRODUCT_PACKAGES += \
     power.msm7x27a
 
 # Camera
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     camera.msm7x27a 
 
 # Filesystem management tools
@@ -109,7 +110,7 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 # audio 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libaudioutils \
     audio.a2dp.default \
     audio.usb.default \
@@ -121,19 +122,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     lights.msm7x27a
 
-
 # Radio properties
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.telephony.ril_class=LGEQualcommUiccRIL \
-ro.telephony.ril.v3=qcomdsds \
-ro.telephony.default_network=0 \
-ro.telephony.call_ring.multiple=0 \
-telephony.lteOnGsmDevice=0 \
-rild.libpath=/system/lib/libril-qc-qmi-1.so \
-rild.libargs=-d/dev/smd0 \
-ril.subscription.types=NV,RUIM \
-DEVICE_PROVISIONED=1 \
-persist.radio.apm_sim_not_pwdn=1
+    ro.telephony.ril_class=LGEQualcommUiccRIL \
+    ro.telephony.ril.config=qcomdsds
+    ro.telephony.default_network=0 \
+    ro.telephony.call_ring.multiple=0 \
+    telephony.lteOnGsmDevice=0 \
+    rild.libpath=/system/lib/libril-qc-qmi-1.so \
+    rild.libargs=-d/dev/smd0 \
+    ril.subscription.types=NV,RUIM \
+    DEVICE_PROVISIONED=1 \
+    persist.radio.apm_sim_not_pwdn=1
 
 # Qcom properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -143,6 +143,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
     debug.gralloc.map_fb_memory=1 \
     debug.hwc.fakevsync=1
+
+# Wifi 
+PRODUCT_PACKAGES += \
+    hostapd \
+    hostapd_default.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf \
+    libwpa_client \
+    dhcpcd.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072

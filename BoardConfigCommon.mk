@@ -133,7 +133,7 @@ endif
 DONT_DEXPREOPT_PREBUILTS := true
 
 # RAdio
-BOARD_PROVIDES_LIBRIL := true
+BOARD_RIL_CLASS := ../../../device/lge/msm7x27a-common/ril
 
 # Use Cpu Upload path (webkit)
 TARGET_FORCE_CPU_UPLOAD := true
