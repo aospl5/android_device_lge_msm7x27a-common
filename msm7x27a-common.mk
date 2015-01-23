@@ -144,12 +144,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Wifi 
 PRODUCT_PACKAGES += \
-    hostapd \
-    hostapd_default.conf \
-    wpa_supplicant \
-    wpa_supplicant.conf \
-    libwpa_client \
-    dhcpcd.conf 
+wpa_supplicant \
+wpa_supplicant.conf \
+wpa_supplicant_overlay.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072
@@ -188,6 +185,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
     ro.telephony.call_ring.multiple=false \
     ro.vold.umsdirtyratio=50 \
+    wifi.interface=wlan0 \
     persist.sys.purgeable_assets=1 \
     ro.telephony.call_ring.delay=3000 \
     ro.config.low_ram=true \

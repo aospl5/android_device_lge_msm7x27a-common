@@ -167,6 +167,8 @@ TARGET_USES_LOGD := false
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
+TARGET_NEEDS_NON_PIE_SUPPORT := true
+
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
