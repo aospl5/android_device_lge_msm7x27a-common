@@ -134,7 +134,8 @@ DONT_DEXPREOPT_PREBUILTS := true
 
 # RAdio
 TARGET_NEEDS_NON_PIE_SUPPORT := true
-BOARD_RIL_CLASS := ../../../device/lge/msm7x27a-common/ril
+BOARD_PROVIDES_LIBRIL := true
+BOARD_USES_LEGACY_RIL := true
 
 # Use Cpu Upload path (webkit)
 TARGET_FORCE_CPU_UPLOAD := true
