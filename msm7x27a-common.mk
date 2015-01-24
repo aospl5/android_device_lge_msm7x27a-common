@@ -142,12 +142,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.gralloc.map_fb_memory=1 \
     debug.hwc.fakevsync=1
 
-# Wifi 
-PRODUCT_PACKAGES += \
-wpa_supplicant \
-wpa_supplicant.conf \
-wpa_supplicant_overlay.conf 
-
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072
 

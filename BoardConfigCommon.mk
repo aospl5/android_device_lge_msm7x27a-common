@@ -133,8 +133,6 @@ endif
 DONT_DEXPREOPT_PREBUILTS := true
 
 # RAdio
-TARGET_NEEDS_NON_PIE_SUPPORT := true
-BOARD_PROVIDES_LIBRIL := true
 BOARD_USES_LEGACY_RIL := true
 
 # Use Cpu Upload path (webkit)
@@ -151,11 +149,6 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 
 TARGET_NO_INITLOGO := true
 
-SE_SET_METADATA := false
-SKIP_SET_METADATA := true
-DISABLE_OTA := true
-RECOVERY_CANT_USE_CONFIG_EXT4_FS_XATTR := true
-
 ## TEMPORARY HACK: skip building external/chromium_org/
 PRODUCT_PREBUILT_WEBVIEWCHROMIUM := yes
 
@@ -167,24 +160,22 @@ TARGET_USES_LOGD := false
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
-TARGET_NEEDS_NON_PIE_SUPPORT := true
-
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_HAS_QCOM_WLAN              := false
-BOARD_HAS_QCOM_WLAN_SDK          := true
-BOARD_WLAN_DEVICE                := qcwcn
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+BOARD_HAS_QCOM_WLAN := true
+BOARD_HAS_QCOM_WLAN_SDK := true
+BOARD_WLAN_DEVICE := qcwcn
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-WIFI_EXT_MODULE_PATH             := "/system/lib/modules/librasdioif.ko"
-WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/wlan.ko"
-WIFI_EXT_MODULE_NAME             := "librasdioif"
-WIFI_DRIVER_MODULE_NAME          := "wlan"
-WIFI_DRIVER_FW_PATH_STA          := "sta"
-WIFI_DRIVER_FW_PATH_AP           := "ap"
-WIFI_DRIVER_FW_PATH_P2P          := "p2p"
-WIFI_DRIVER_FW_PATH_PARAM        := "/data/misc/wifi/fwpath"
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+WIFI_EXT_MODULE_PATH := "/system/lib/modules/librasdioif.ko"
+WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
+WIFI_EXT_MODULE_NAME := "librasdioif"
+WIFI_DRIVER_MODULE_NAME := "wlan"
+WIFI_DRIVER_FW_PATH_STA := "sta"
+WIFI_DRIVER_FW_PATH_AP := "ap"
+WIFI_DRIVER_FW_PATH_P2P := "p2p"
+WIFI_DRIVER_FW_PATH_PARAM := "/data/misc/wifi/fwpath"
