@@ -189,6 +189,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 debug.qualcomm.sns.hal=e \
 debug.qualcomm.sns.daemon=e
 
+# Wifi
+PRODUCT_PACKAGES += \
+wpa_supplicant \
+wpa_supplicant.conf \
+wpa_supplicant_overlay.conf 
+
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_BRAND := lge
