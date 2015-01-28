@@ -35,6 +35,7 @@ BOARD_VENDOR := lge
 
 # Platform
 TARGET_BOARD_PLATFORM := msm7x27a
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 # Architecture
 TARGET_ARCH := arm
@@ -167,7 +168,8 @@ ifeq ($(HOST_OS),linux)
 endif
 DONT_DEXPREOPT_PREBUILTS := true
 
-# Radio
+# RIL
+TARGET_NEEDS_NON_PIE_SUPPORT := true
 BOARD_USES_LEGACY_RIL := true
 BOARD_FORCE_RILD_AS_ROOT := true
 
