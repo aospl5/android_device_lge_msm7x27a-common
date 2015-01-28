@@ -32,22 +32,38 @@ LOCAL_PATH := device/lge/msm7x27a-common
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 BOARD_VENDOR := lge
-TARGET_NO_BOOTLOADER := true
+
+# Platform
 TARGET_BOARD_PLATFORM := msm7x27a
 
+# Architecture
 TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
-TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
+# Qualcomm Hardware
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
+BOARD_USES_QCOM_HARDWARE := true
+TARGET_PROVIDES_LIBLIGHT := true
+
+# We don't build bootloader nor radio
+TARGET_NO_BOOTLOADER := true
+
+# Kernel
 TARGET_KERNEL_SOURCE := kernel/lge/msm7x27a-common
+ifeq ($(HOST_OS),linux)
+  KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
+else
+  KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/darwin-x86/arm/arm-eabi-4.7/bin
+endif
 BOARD_KERNEL_BASE := 0x00200000
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x1200000
 BOARD_KERNEL_PAGESIZE := 4096
 
+# Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 487136952
@@ -74,9 +90,8 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_LEGACY
 COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_CAM_PARAMS
 COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
 
-# QCOM  display stuffs
+# Graphics
 TARGET_QCOM_DISPLAY_VARIANT := display-caf
-BOARD_USES_QCOM_HARDWARE := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 USE_OPENGL_RENDERER := true
 TARGET_USES_QCOM_BSP := true
@@ -86,6 +101,7 @@ TARGET_NO_ADAPTIVE_PLAYBACK := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
 HWUI_COMPILE_FOR_PERF := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_NO_INITLOGO := true
 BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
 
 # Media 
@@ -94,11 +110,18 @@ TARGET_QCOM_MEDIA_VARIANT := media-caf
 # Add QC Video Enhancements flag
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
-# bluetooth
+# Bluetooth
 BOARD_HAVE_BLUETOOTH := true
+
+# Compiler Optimization
+ARCH_ARM_HIGH_OPTIMIZATION := true
+ARCH_ARM_HIGH_OPTIMIZATION_COMPAT := true
 
 # BIONIC: use legacy mmap
 BOARD_USES_LEGACY_MMAP := true
+
+# Squisher
+TARGET_SYSTEMIMAGE_USE_SQUISHER	:= true
 
 # Media
 TARGET_QCOM_LEGACY_OMX := true
@@ -106,9 +129,10 @@ TARGET_QCOM_LEGACY_OMX := true
 # ION Support
 TARGET_USES_ION := true
 
-# audio 
+# Audio
 TARGET_QCOM_AUDIO_VARIANT := audio-caf
 TARGET_PROVIDES_LIBAUDIO := true
+BOARD_HAVE_PRE_KITKAT_AUDIO_POLICY_BLOB := true
 BOARD_QCOM_VOIP_ENABLED := true
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 TARGET_HAS_QACT := true
@@ -119,9 +143,20 @@ WITH_JIT := true
 ENABLE_JSC_JIT := true
 JS_ENGINE := v8
 HTTP := chrome
+TARGET_ARCH_LOWMEM := true
+TARGET_WEBKIT_USE_MORE_MEMORY := true
+
+# Use Cpu Upload path (webkit)
+TARGET_FORCE_CPU_UPLOAD := true
+
+# Allow to flash other version device
+USE_SET_METADATA := false
+SKIP_SET_METADATA := true
+DISABLE_OTA := true
 
 # ART
 MALLOC_IMPL := dlmalloc
+
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
  ifeq ($(TARGET_BUILD_VARIANT),userdebug)
@@ -132,25 +167,23 @@ ifeq ($(HOST_OS),linux)
 endif
 DONT_DEXPREOPT_PREBUILTS := true
 
-# RAdio
+# Radio
 BOARD_USES_LEGACY_RIL := true
-TARGET_RIL_VARIANT := caf
+BOARD_FORCE_RILD_AS_ROOT := true
 
-# Use Cpu Upload path (webkit)
-TARGET_FORCE_CPU_UPLOAD := true
+# Camera
+TARGET_DISABLE_ARM_PIE := true
+BOARD_NEEDS_MEMORYHEAPPMEM := true
+USE_DEVICE_SPECIFIC_CAMERA := true
 
+# GPS
 BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm7x27a
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
+# Boot Animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
-
-USE_DEVICE_SPECIFIC_CAMERA := true
-
-TARGET_NO_INITLOGO := true
-
-TARGET_PROVIDES_LIBLIGHT := true
 
 # LOGD
 TARGET_USES_LOGD := false
@@ -161,6 +194,7 @@ USE_MINIKIN := true
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
+# Wi-Fi
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn

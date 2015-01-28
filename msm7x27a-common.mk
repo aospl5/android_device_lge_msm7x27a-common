@@ -12,8 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Inherit from those products. Most specific first
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/locales_full.mk)
+
 $(call inherit-product, vendor/lge/msm7x27a-common/msm7x27a-common-vendor.mk)
+
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/lge/msm7x27a-common/overlay
@@ -71,7 +77,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
-# display HALS
+# Graphics
 PRODUCT_PACKAGES += \
     copybit.msm7x27a \
     gralloc.msm7x27a \
@@ -82,7 +88,14 @@ PRODUCT_PACKAGES += \
     libtilerenderer \
     libqdMetaData
 
-# off-mode charging
+# Omx
+PRODUCT_PACKAGES += \
+    libmm-omxcore \
+    libOmxCore \
+    libstagefrighthw \
+    libdashplayer
+
+# Off-mode charging
 PRODUCT_PACKAGES += \
     charger \
     charger_res_images
@@ -127,18 +140,27 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=0 \
     ro.telephony.call_ring.multiple=0 \
     telephony.lteOnGsmDevice=0 \
-    ro.telephony.ril.config=qcomdsds \
     rild.libpath=/system/lib/libril-qc-qmi-1.so \
     rild.libargs=-d/dev/smd0 \
+    ro.telephony.ril.config=datacallapn,signalstrength \
     ril.subscription.types=NV,RUIM \
     DEVICE_PROVISIONED=1 \
+    ro.use_data_netmgrd=true \
     persist.radio.apm_sim_not_pwdn=1
+
+# Media codecs
+PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml 
 
 # Qcom properties
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.composition.type=dyn \
     persist.hwc.mdpcomp.enable=false \
     debug.mdpcomp.logs=0 \
+    ro.com.google.locationfeatures=1 \
     com.qc.hardware=true \
     debug.gralloc.map_fb_memory=1 \
     debug.hwc.fakevsync=1
@@ -190,11 +212,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
 debug.qualcomm.sns.hal=e \
 debug.qualcomm.sns.daemon=e
 
+# Use awesome player instead of nuplayer
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.media.use-awesome=true \
+    audio.offload.disable=1
+
 # Wifi
 PRODUCT_PACKAGES += \
-wpa_supplicant \
-wpa_supplicant.conf \
-wpa_supplicant_overlay.conf 
+    wpa_supplicant \
+    wpa_supplicant.conf \
+    wpa_supplicant_overlay.conf 
+
+# Other
+PRODUCT_PACKAGES += \
+    dexpreopt 
+
+# Disable strict mode
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.strictmode.visual=0 \
+    persist.sys.strictmode.disable=1
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
