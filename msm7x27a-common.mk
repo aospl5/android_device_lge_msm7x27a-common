@@ -123,7 +123,7 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 # audio 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libaudioutils \
     audio.a2dp.default \
     audio.usb.default \
