@@ -35,7 +35,6 @@ BOARD_VENDOR := lge
 
 # Platform
 TARGET_BOARD_PLATFORM := msm7x27a
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 # Architecture
 TARGET_ARCH := arm
