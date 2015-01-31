@@ -185,9 +185,6 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
-# LOGD
-TARGET_USES_LOGD := false
-
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
