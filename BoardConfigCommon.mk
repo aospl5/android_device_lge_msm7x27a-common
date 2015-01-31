@@ -73,8 +73,8 @@ BLOCK_BASED_OTA := false
 
 # cflags
 COMMON_GLOBAL_CFLAGS += -DLPA_DEFAULT_BUFFER_SIZE=480
-TARGET_GLOBAL_CFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
-TARGET_GLOBAL_CPPFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
+TARGET_GLOBAL_CFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a9
+TARGET_GLOBAL_CPPFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a9
 TARGET_RELEASE_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_OMX
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
@@ -129,8 +129,10 @@ TARGET_QCOM_AUDIO_VARIANT := audio-caf
 TARGET_PROVIDES_LIBAUDIO := true
 BOARD_HAVE_PRE_KITKAT_AUDIO_POLICY_BLOB := true
 BOARD_QCOM_VOIP_ENABLED := true
-BOARD_USES_LEGACY_ALSA_AUDIO := true
 TARGET_HAS_QACT := true
+BOARD_USES_LEGACY_ALSA_AUDIO := true
+AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
+AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
 
 # Add h/w acceleration in browser
 ENABLE_WEBGL := true
