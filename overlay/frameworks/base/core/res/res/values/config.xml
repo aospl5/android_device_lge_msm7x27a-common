@@ -80,6 +80,13 @@
         <item>"7,1"</item>
     </string-array>
 
+     <!-- Flag indicating whether the surface flinger has limited
+     alpha compositing functionality in hardware. If set, the window
+     manager will disable alpha trasformation in animations where not
+     strictly needed. -->
+     <bool name="config_sf_limitedAlpha">true</bool>
+
+
     <bool name="config_automatic_brightness_available">false</bool>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
