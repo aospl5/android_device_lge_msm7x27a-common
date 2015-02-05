@@ -87,6 +87,13 @@ PRODUCT_PACKAGES += \
     liboverlay \
     libtilerenderer \
     libqdMetaData
+    
+# F2FS
++PRODUCT_PACKAGES += \
+   mkfs.f2fs \
+   fsck.f2fs \
+   make_f2fs \
+   mkf2fsuserimg.sh	
 
 # Omx
 PRODUCT_PACKAGES += \
