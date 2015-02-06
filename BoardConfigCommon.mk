@@ -106,8 +106,6 @@ TARGET_QCOM_MEDIA_VARIANT := media-caf
 # Add QC Video Enhancements flag
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
-# Enable workaround for slow rom flash
-BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
