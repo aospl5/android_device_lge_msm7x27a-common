@@ -106,7 +106,6 @@ TARGET_QCOM_MEDIA_VARIANT := media-caf
 # Add QC Video Enhancements flag
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
-
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 
@@ -144,11 +143,6 @@ TARGET_WEBKIT_USE_MORE_MEMORY := true
 
 # Use Cpu Upload path (webkit)
 TARGET_FORCE_CPU_UPLOAD := true
-
-# Allow to flash other version device
-USE_SET_METADATA := false
-SKIP_SET_METADATA := true
-DISABLE_OTA := true
 
 # ART
 MALLOC_IMPL := dlmalloc
