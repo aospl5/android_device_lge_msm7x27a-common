@@ -223,6 +223,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.use-awesome=true \
     audio.offload.disable=1
 
+# WLAN
+PRODUCT_PROPERTY_OVERRIDES += \
+    wifi.interface=wlan0 \
+    wifi.supplicant_scan_interval=20 \
+
 # Wifi
 PRODUCT_PACKAGES += \
     wpa_supplicant \
