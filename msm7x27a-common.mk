@@ -144,13 +144,14 @@ PRODUCT_PACKAGES += \
 
 # Radio properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=0 \
+    ro.telephony.default_network=3 \
+    ro.telephony.call_ring.delay=0 \
+    ro.telephony.call_ring.multiple=0 \
+    persist.radio.apm_sim_not_pwdn=1 \
+    keyguard.no_require_sim=1 \
+    ro.use_data_netmgrd=true \
     ro.telephony.call_ring.multiple=0 \
     telephony.lteOnGsmDevice=0 \
-    rild.libpath=/system/lib/libril-qc-qmi-1.so \
-    rild.libargs=-d/dev/smd0 \
-    ril.subscription.types=NV,RUIM \
-    DEVICE_PROVISIONED=1 \
     persist.radio.apm_sim_not_pwdn=1
 
 # Media codecs
