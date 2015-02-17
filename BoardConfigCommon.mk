@@ -170,7 +170,16 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 USE_MINIKIN := true
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_DIRS := \
+       device/lge/msm7x27a-common/sepolicy
+
+BOARD_SEPOLICY_UNION := \
+       device.te \
+       app.te \
+       file_contexts \
+       untrusted_app.te \
+       vold.te \
+       zygote.te
 
 # Wi-Fi
 BOARD_HAS_QCOM_WLAN := true
