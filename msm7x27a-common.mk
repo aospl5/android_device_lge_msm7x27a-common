@@ -181,6 +181,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.max_starting_bg=6
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.isUsbOtgEnabled=true \
     persist.sys.usb.config=mtp
 
 PRODUCT_PROPERTY_OVERRIDES += \
