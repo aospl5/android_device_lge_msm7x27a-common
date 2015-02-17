@@ -166,7 +166,7 @@ USE_MINIKIN := true
 # qcom sepolicy
 include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS += \
        device/lge/msm7x27a-common/sepolicy
 
 # Wi-Fi
