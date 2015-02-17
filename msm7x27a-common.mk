@@ -87,13 +87,6 @@ PRODUCT_PACKAGES += \
     liboverlay \
     libtilerenderer \
     libqdMetaData
-    
-# F2FS
-+PRODUCT_PACKAGES += \
-   mkfs.f2fs \
-   fsck.f2fs \
-   make_f2fs \
-   mkf2fsuserimg.sh	
 
 # Omx
 PRODUCT_PACKAGES += \
@@ -144,14 +137,13 @@ PRODUCT_PACKAGES += \
 
 # Radio properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=3 \
-    ro.telephony.call_ring.delay=0 \
-    ro.telephony.call_ring.multiple=0 \
-    persist.radio.apm_sim_not_pwdn=1 \
-    keyguard.no_require_sim=1 \
-    ro.use_data_netmgrd=true \
+    ro.telephony.default_network=0 \
     ro.telephony.call_ring.multiple=0 \
     telephony.lteOnGsmDevice=0 \
+    rild.libpath=/system/lib/libril-qc-qmi-1.so \
+    rild.libargs=-d/dev/smd0 \
+    ril.subscription.types=NV,RUIM \
+    DEVICE_PROVISIONED=1 \
     persist.radio.apm_sim_not_pwdn=1
 
 # Media codecs
@@ -207,27 +199,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Other stuff
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
-    ro.telephony.call_ring.multiple=false \
-    ro.vold.umsdirtyratio=50 \
-    wifi.interface=wlan0 \
     persist.sys.purgeable_assets=1 \
-    ro.telephony.call_ring.delay=3000 \
     ro.config.low_ram=true \
-    ro.com.android.mobiledata=false \
-    ro.com.android.dataroaming=false
-
-debug.qualcomm.sns.hal=e \
-debug.qualcomm.sns.daemon=e
+    debug.qualcomm.sns.hal=e \
+    debug.qualcomm.sns.daemon=e
 
 # Use awesome player instead of nuplayer
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.use-awesome=true \
     audio.offload.disable=1
-
-# WLAN
-PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=20 \
 
 # Wifi
 PRODUCT_PACKAGES += \

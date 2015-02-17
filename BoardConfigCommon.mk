@@ -72,7 +72,6 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_VOLD_MAX_PARTITIONS := 23
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
 # Don't generate block mode update zips
 BLOCK_BASED_OTA := false
@@ -137,18 +136,6 @@ BOARD_USES_LEGACY_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
 AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
 
-# Add h/w acceleration in browser
-ENABLE_WEBGL := true
-WITH_JIT := true
-ENABLE_JSC_JIT := true
-JS_ENGINE := v8
-HTTP := chrome
-TARGET_ARCH_LOWMEM := true
-TARGET_WEBKIT_USE_MORE_MEMORY := true
-
-# Use Cpu Upload path (webkit)
-TARGET_FORCE_CPU_UPLOAD := true
-
 # ART
 MALLOC_IMPL := dlmalloc
 
@@ -163,11 +150,7 @@ endif
 DONT_DEXPREOPT_PREBUILTS := true
 
 # RIL
-TARGET_PROVIDES_LIBRIL := true
-BOARD_USES_LEGACY_RIL := true
-BOARD_FORCE_RILD_AS_ROOT := true
 TARGET_NEEDS_NON_PIE_SUPPORT := true
-BOARD_RIL_CLASS := ../../../device/lge/msm7x27a-common/ril
 
 # Camera
 TARGET_DISABLE_ARM_PIE := true
